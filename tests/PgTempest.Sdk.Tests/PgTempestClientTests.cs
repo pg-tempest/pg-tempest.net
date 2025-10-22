@@ -224,4 +224,21 @@ public sealed class PgTempestClientTests
         // Act
         await client.ReleaseTestDb(templateHash, getTestDbResult.TestDbId);
     }
+
+    [Test]
+    public async Task InitializeTemplate_TemplateDoesNotExist()
+    {
+        // Arrange
+        var client = new PgTempestClient(PgTempestContainerFixture.GetPgTempestHttpClient());
+
+        var templateHash = Random.Shared.NextTemplateHash();
+        var initializationDuration = TimeSpan.FromSeconds(10);
+
+        // Act
+        await client.InitializeTemplate(
+            templateHash,
+            initializationDuration,
+            _ => Task.CompletedTask
+        );
+    }
 }

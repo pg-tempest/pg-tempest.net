@@ -205,4 +205,52 @@ public sealed class PgTempestClient(HttpClient httpClient)
                 throw new NullReferenceException();
         }
     }
+
+    public async Task InitializeTemplate(
+        TemplateHash templateHash,
+        TimeSpan initializationDuration,
+        Func<DbConnectionOptions, Task> initializationCallback,
+        CancellationToken cancellationToken = default
+    )
+    {
+        StartTemplateInitializationResult startResult;
+        while (true)
+        {
+            startResult = await StartTemplateInitialization(
+                templateHash,
+                initializationDuration,
+                cancellationToken
+            );
+
+            if (startResult is StartTemplateInitializationResult.InitializationIsInProgress)
+            {
+                await Task.Delay(TimeSpan.FromMilliseconds(100), cancellationToken);
+                continue;
+            }
+
+            break;
+        }
+
+        switch (startResult)
+        {
+            case StartTemplateInitializationResult.InitializationIsFinished:
+            {
+                return;
+            }
+            case StartTemplateInitializationResult.InitializationWasStarted started:
+            {
+                try
+                {
+                    await initializationCallback(started.DbConnectionOptions);
+                    await FinishTemplateInitialization(templateHash, cancellationToken);
+                }
+                catch
+                {
+                    await MarkTemplateInitializationAsFailed(templateHash, CancellationToken.None);
+                    throw;
+                }
+                return;
+            }
+        }
+    }
 }
