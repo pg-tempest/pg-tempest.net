@@ -1,4 +1,5 @@
 ﻿using PgTempest.Sdk.Client;
+using PgTempest.Sdk.Client.Models;
 using PgTempest.Sdk.Models;
 using PgTempest.Sdk.Tests.Extensions;
 using Shouldly;
@@ -29,7 +30,8 @@ public sealed class PgTempestClientTests
         );
 
         // Assert
-        var startedResult = firstResult.UnwrapInitializationWasStarted();
+        var startedResult =
+            firstResult.ShouldBeOfType<StartTemplateInitializationResult.InitializationWasStarted>();
         startedResult.DbConnectionOptions.Database.ShouldContain(templateHash.ToString());
         startedResult.InitializationDeadline.ShouldBeInRange(
             minExpectedInitializationDeadline,
@@ -43,7 +45,8 @@ public sealed class PgTempestClientTests
         );
 
         // Assert
-        var inProgressResult = secondResult.UnwrapInitializationIsInProgress();
+        var inProgressResult =
+            secondResult.ShouldBeOfType<StartTemplateInitializationResult.InitializationIsInProgress>();
         inProgressResult.InitializationDeadline.ShouldBeInRange(
             minExpectedInitializationDeadline,
             maxExpectedInitializationDeadline
@@ -194,7 +197,6 @@ public sealed class PgTempestClientTests
         var templateHash = Random.Shared.NextTemplateHash();
 
         var initializationDuration = TimeSpan.FromSeconds(10);
-        var usageDuration = TimeSpan.FromSeconds(10);
         await client.StartTemplateInitialization(templateHash, initializationDuration);
         await client.FinishTemplateInitialization(templateHash);
 

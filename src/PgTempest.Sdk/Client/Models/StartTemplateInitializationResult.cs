@@ -1,17 +1,16 @@
-using Dunet;
 using PgTempest.Sdk.Models;
 
 namespace PgTempest.Sdk.Client.Models;
 
-[Union]
-public partial record StartTemplateInitializationResult
+public abstract record StartTemplateInitializationResult
 {
-    public partial record InitializationWasStarted(
+    public sealed record InitializationWasStarted(
         DbConnectionOptions DbConnectionOptions,
         DateTime InitializationDeadline
-    );
+    ) : StartTemplateInitializationResult;
 
-    public partial record InitializationIsInProgress(DateTime InitializationDeadline);
+    public sealed record InitializationIsInProgress(DateTime InitializationDeadline)
+        : StartTemplateInitializationResult;
 
-    public partial record InitializationIsFinished();
+    public sealed record InitializationIsFinished : StartTemplateInitializationResult;
 }
