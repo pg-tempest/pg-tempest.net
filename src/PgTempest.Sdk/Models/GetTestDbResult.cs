@@ -1,4 +1,4 @@
-namespace PgTempest.Sdk.Client.Models;
+namespace PgTempest.Sdk.Models;
 
 public sealed record GetTestDbResult(
     TestDbId TestDbId,

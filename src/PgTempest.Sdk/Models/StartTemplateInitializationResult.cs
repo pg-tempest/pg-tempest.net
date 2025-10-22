@@ -1,7 +1,7 @@
 using System;
 using Dunet;
 
-namespace PgTempest.Sdk.Client.Models;
+namespace PgTempest.Sdk.Models;
 
 [Union]
 public partial record StartTemplateInitializationResult
@@ -11,9 +11,7 @@ public partial record StartTemplateInitializationResult
         DateTime InitializationDeadline
     );
 
-    public partial record InitializationIsInProgress(
-        DateTime InitializationDeadline
-    );
+    public partial record InitializationIsInProgress(DateTime InitializationDeadline);
 
     public partial record InitializationIsFinished();
 }

@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 
-namespace PgTempest.Sdk.Client.Dtos;
+namespace PgTempest.Sdk.Dtos;
 
-internal sealed record MarkTemplateInitializationAsFailedRequestBody(
+internal sealed record FinishTemplateInitializationRequestBody(
     [property: JsonPropertyName("templateHash")] string TemplateHash
 );

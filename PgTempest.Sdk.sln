@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PgTempest.Sdk.Client", "src\PgTempest.Sdk.Client\PgTempest.Sdk.Client.csproj", "{71E55FA0-DEF3-415E-8DCE-388AF037283B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PgTempest.Sdk", "src\PgTempest.Sdk\PgTempest.Sdk.csproj", "{71E55FA0-DEF3-415E-8DCE-388AF037283B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PgTempest.Sdk.Client.Tests", "tests\PgTempest.Sdk.Client.Tests\PgTempest.Sdk.Client.Tests.csproj", "{9F1802EE-DC3A-45F4-8E2E-1C1D42FE9C9C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PgTempest.Sdk.Tests", "tests\PgTempest.Sdk.Tests\PgTempest.Sdk.Tests.csproj", "{9F1802EE-DC3A-45F4-8E2E-1C1D42FE9C9C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{7C477406-2001-4B3A-A0CC-F74CC8ACFDDF}"
 EndProject

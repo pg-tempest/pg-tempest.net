@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace PgTempest.Sdk.Client.Dtos;
+namespace PgTempest.Sdk.Dtos;
 
 internal sealed record MarkTemplateInitializationAsFailedResponseBody(
     [property: JsonPropertyName("initializationIsFailed")] EmptyDto? InitializationIsFailed,

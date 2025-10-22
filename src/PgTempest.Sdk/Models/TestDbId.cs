@@ -1,5 +1,5 @@
 using System;
 
-namespace PgTempest.Sdk.Client.Models;
+namespace PgTempest.Sdk.Models;
 
 public sealed record TestDbId(ushort Value);

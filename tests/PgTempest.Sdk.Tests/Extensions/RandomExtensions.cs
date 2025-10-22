@@ -1,6 +1,6 @@
-using PgTempest.Sdk.Client.Models;
+using PgTempest.Sdk.Models;
 
-namespace PgTempest.Sdk.Client.Tests.Extensions;
+namespace PgTempest.Sdk.Tests.Extensions;
 
 internal static class RandomExtensions
 {

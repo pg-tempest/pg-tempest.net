@@ -2,7 +2,7 @@ using System.Buffers;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Unicode;
 
-namespace PgTempest.Sdk.Client.Models;
+namespace PgTempest.Sdk.Models;
 
 public sealed class TemplateHash
 {

@@ -1,8 +1,8 @@
-﻿using PgTempest.Sdk.Client.Models;
-using PgTempest.Sdk.Client.Tests.Extensions;
+﻿using PgTempest.Sdk.Models;
+using PgTempest.Sdk.Tests.Extensions;
 using Shouldly;
 
-namespace PgTempest.Sdk.Client.Tests;
+namespace PgTempest.Sdk.Tests;
 
 [Parallelizable(ParallelScope.All)]
 public sealed class PgTempestClientTests

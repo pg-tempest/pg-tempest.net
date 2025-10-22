@@ -20,6 +20,6 @@
     <Using Include="NUnit.Framework" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\PgTempest.Sdk.Client\PgTempest.Sdk.Client.csproj" />
+    <ProjectReference Include="..\..\src\PgTempest.Sdk\PgTempest.Sdk.csproj" />
   </ItemGroup>
 </Project>

@@ -3,7 +3,7 @@ using DotNet.Testcontainers.Containers;
 using DotNet.Testcontainers.Networks;
 using Testcontainers.PostgreSql;
 
-namespace PgTempest.Sdk.Client.Tests;
+namespace PgTempest.Sdk.Tests;
 
 [SetUpFixture]
 public static class PgTempestContainerFixture
