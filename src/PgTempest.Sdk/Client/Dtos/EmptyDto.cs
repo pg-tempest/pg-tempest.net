@@ -1,3 +1,3 @@
-namespace PgTempest.Sdk.Dtos;
+namespace PgTempest.Sdk.Client.Dtos;
 
 internal readonly record struct EmptyDto;

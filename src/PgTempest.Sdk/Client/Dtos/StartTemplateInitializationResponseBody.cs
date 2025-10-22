@@ -1,7 +1,6 @@
 using System.Text.Json.Serialization;
-using PgTempest.Sdk.Models;
 
-namespace PgTempest.Sdk.Dtos;
+namespace PgTempest.Sdk.Client.Dtos;
 
 internal sealed record StartTemplateInitializationResponseBody(
     [property: JsonPropertyName("initializationWasStarted")]

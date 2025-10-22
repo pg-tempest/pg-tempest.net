@@ -1,4 +1,5 @@
-﻿using PgTempest.Sdk.Models;
+﻿using PgTempest.Sdk.Client;
+using PgTempest.Sdk.Models;
 using PgTempest.Sdk.Tests.Extensions;
 using Shouldly;
 

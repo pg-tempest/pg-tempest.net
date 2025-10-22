@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace PgTempest.Sdk.Dtos;
+namespace PgTempest.Sdk.Client.Dtos;
 
 internal sealed record DbConnectionOptionsDto(
     [property: JsonPropertyName("host"), JsonRequired] string Host,

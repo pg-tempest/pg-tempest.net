@@ -1,7 +1,7 @@
-using System;
 using Dunet;
+using PgTempest.Sdk.Models;
 
-namespace PgTempest.Sdk.Models;
+namespace PgTempest.Sdk.Client.Models;
 
 [Union]
 public partial record StartTemplateInitializationResult

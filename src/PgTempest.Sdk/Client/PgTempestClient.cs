@@ -1,8 +1,10 @@
 using System.Net.Http.Json;
-using PgTempest.Sdk.Dtos;
+using PgTempest.Sdk.Client.Dtos;
+using PgTempest.Sdk.Client.Models;
 using PgTempest.Sdk.Models;
+using StartTemplateInitializationResult = PgTempest.Sdk.Client.Models.StartTemplateInitializationResult;
 
-namespace PgTempest.Sdk;
+namespace PgTempest.Sdk.Client;
 
 public sealed class PgTempestClient(HttpClient httpClient)
 {
