@@ -1,0 +1,2 @@
+ALTER TABLE todos
+    ADD COLUMN IF NOT EXISTS parent_id bigint REFERENCES todos(id) ON DELETE CASCADE;

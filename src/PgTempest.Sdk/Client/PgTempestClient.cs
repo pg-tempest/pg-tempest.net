@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Net.Http.Json;
 using PgTempest.Sdk.Client.Dtos;
 using PgTempest.Sdk.Client.Models;
@@ -8,6 +9,14 @@ namespace PgTempest.Sdk.Client;
 
 public sealed class PgTempestClient(HttpClient httpClient)
 {
+    public static PgTempestClient NewFromBaseUrl([StringSyntax("Uri")] string baseUrl)
+    {
+        var httpClient = new HttpClient();
+        httpClient.BaseAddress = new Uri(baseUrl);
+
+        return new PgTempestClient(httpClient);
+    }
+
     public async Task<StartTemplateInitializationResult> StartTemplateInitialization(
         TemplateHash templateHash,
         TimeSpan initializationDuration,

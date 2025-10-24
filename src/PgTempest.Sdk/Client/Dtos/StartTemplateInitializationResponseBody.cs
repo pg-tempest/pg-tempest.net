@@ -7,7 +7,7 @@ internal sealed record StartTemplateInitializationResponseBody(
         StartTemplateInitializationResponseBodyInitializationWasStarted? InitializationWasStarted,
     [property: JsonPropertyName("initializationIsInProgress")]
         StartTemplateInitializationResponseBodyInitializationIsInProgress? InitializationIsInProgress,
-    [property: JsonPropertyName("initializationIsInFinished")] EmptyDto? InitializationIsFinished,
+    [property: JsonPropertyName("initializationIsFinished")] EmptyDto? InitializationIsFinished,
     [property: JsonPropertyName("unexpectedError")]
         StartTemplateInitializationResponseBodyUnexpectedError? UnexpectedError
 );

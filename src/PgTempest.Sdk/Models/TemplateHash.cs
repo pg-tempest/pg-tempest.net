@@ -1,6 +1,6 @@
 using System.Buffers;
-using System.Diagnostics.CodeAnalysis;
-using System.Text.Unicode;
+using System.Runtime.InteropServices;
+using System.Security.Cryptography;
 
 namespace PgTempest.Sdk.Models;
 
@@ -24,7 +24,7 @@ public sealed class TemplateHash
         _hash = hash;
     }
 
-    public static TemplateHash Parse(string s, IFormatProvider? provider)
+    public static TemplateHash Parse(string s)
     {
         var hash = new byte[TemplateHashLength];
 
@@ -36,5 +36,19 @@ public sealed class TemplateHash
     public override string ToString()
     {
         return Convert.ToHexString(_hash);
+    }
+
+    public static TemplateHash Calculate(params IEnumerable<string> hashSources)
+    {
+        // TODO: Optimize hash calculation.
+        var combinedString = string.Join("", hashSources);
+        var hash = new byte[TemplateHashLength];
+
+        MD5.HashData(
+            source: MemoryMarshal.AsBytes(combinedString.AsSpan()),
+            destination: hash.AsSpan()
+        );
+
+        return new TemplateHash(hash);
     }
 }
