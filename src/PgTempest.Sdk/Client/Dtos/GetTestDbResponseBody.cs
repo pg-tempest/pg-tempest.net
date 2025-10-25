@@ -11,7 +11,7 @@ internal sealed record GetTestDbResponseBody(
 );
 
 internal sealed record GetTestDbResponseBodyTestDbWasCreated(
-    [property: JsonPropertyName("testDbId"), JsonRequired] ushort TestDbId,
+    [property: JsonPropertyName("testDbId"), JsonRequired] string TestDbId,
     [property: JsonPropertyName("dbConnectionOptions"), JsonRequired]
         DbConnectionOptionsDto DbConnectionOptions,
     [property: JsonPropertyName("usageDeadline"), JsonRequired] DateTime UsageDeadline

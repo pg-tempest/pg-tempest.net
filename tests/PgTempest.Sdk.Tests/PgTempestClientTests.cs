@@ -100,7 +100,7 @@ public sealed class PgTempestClientTests
             CancellationToken.None
         );
 
-        await client.MarkTemplateInitializationAsFailed(templateHash);
+        await client.FailTemplateInitialization(templateHash);
 
         // Act
         var action = () => client.FinishTemplateInitialization(templateHash);
@@ -182,7 +182,7 @@ public sealed class PgTempestClientTests
         var templateHash = Random.Shared.NextTemplateHash();
 
         // Act
-        var action = () => client.ReleaseTestDb(templateHash, new TestDbId(1));
+        var action = () => client.FinishTestDbUsage(templateHash, new TestDbId(1));
 
         // Assert
         await action.ShouldThrowAsync<InvalidOperationException>();
@@ -201,7 +201,7 @@ public sealed class PgTempestClientTests
         await client.FinishTemplateInitialization(templateHash);
 
         // Act
-        var action = () => client.ReleaseTestDb(templateHash, new TestDbId(1));
+        var action = () => client.FinishTestDbUsage(templateHash, new TestDbId(1));
 
         // Assert
         await action.ShouldThrowAsync<InvalidOperationException>();
@@ -222,7 +222,7 @@ public sealed class PgTempestClientTests
         var getTestDbResult = await client.GetTestDb(templateHash, usageDuration);
 
         // Act
-        await client.ReleaseTestDb(templateHash, getTestDbResult.TestDbId);
+        await client.FinishTestDbUsage(templateHash, getTestDbResult.TestDbId);
     }
 
     [Test]

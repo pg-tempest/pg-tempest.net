@@ -26,8 +26,8 @@ internal sealed class DbFactoryFixture
 
         await pgTempestClient.InitializeTemplate(
             templateHash,
-            TimeSpan.FromSeconds(30),
-            async dbConnectionOptions =>
+            initializationDuration: TimeSpan.FromSeconds(30),
+            initializationCallback: async dbConnectionOptions =>
             {
                 await using var npgsqlDataSource = NpgsqlDataSource.Create(
                     dbConnectionOptions.ConnectionString

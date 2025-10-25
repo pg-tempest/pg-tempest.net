@@ -33,10 +33,10 @@ public sealed class PgTempestClient(HttpClient httpClient)
 
         var request = new StartTemplateInitializationRequestBody(
             templateHash.ToString(),
-            (ulong)initializationDuration.TotalSeconds
+            InitializationDurationMs: (ulong)initializationDuration.TotalMilliseconds
         );
         var httpResponse = await httpClient.PostAsJsonAsync(
-            "/templates/start-initialization",
+            "/api/start-template-initialization",
             request,
             cancellationToken
         );
@@ -76,7 +76,7 @@ public sealed class PgTempestClient(HttpClient httpClient)
     {
         var request = new FinishTemplateInitializationRequestBody(templateHash.ToString());
         var httpResponse = await httpClient.PostAsJsonAsync(
-            "/templates/finish-initialization",
+            "/api/finish-template-initialization",
             request,
             cancellationToken
         );
@@ -99,21 +99,21 @@ public sealed class PgTempestClient(HttpClient httpClient)
         }
     }
 
-    public async Task MarkTemplateInitializationAsFailed(
+    public async Task FailTemplateInitialization(
         TemplateHash templateHash,
         CancellationToken cancellationToken = default
     )
     {
-        var request = new MarkTemplateInitializationAsFailedRequestBody(templateHash.ToString());
+        var request = new FailTemplateInitializationRequestBody(templateHash.ToString());
 
         var httpResponse = await httpClient.PostAsJsonAsync(
-            "/templates/mark-initialization-as-failed",
+            "/api/fail-template-initialization",
             request,
             cancellationToken
         );
 
         var responseBody =
-            await httpResponse.Content.ReadFromJsonAsync<MarkTemplateInitializationAsFailedResponseBody>(
+            await httpResponse.Content.ReadFromJsonAsync<FailTemplateInitializationResponseBody>(
                 cancellationToken
             );
 
@@ -146,11 +146,11 @@ public sealed class PgTempestClient(HttpClient httpClient)
 
         var request = new GetTestDbRequestBody(
             templateHash.ToString(),
-            (ulong)usageDuration.TotalSeconds
+            UsageDurationMs: (ulong)usageDuration.TotalMilliseconds
         );
 
         var httpResponse = await httpClient.PostAsJsonAsync(
-            "/test-dbs/get",
+            "/api/get-test-db",
             request,
             cancellationToken
         );
@@ -163,7 +163,7 @@ public sealed class PgTempestClient(HttpClient httpClient)
         {
             case { TestDbWasCreated: { } testDbWasCreated }:
                 return new GetTestDbResult(
-                    new TestDbId(testDbWasCreated.TestDbId),
+                    TestDbId.Parse(testDbWasCreated.TestDbId),
                     new DbConnectionOptions(
                         testDbWasCreated.DbConnectionOptions.Host,
                         testDbWasCreated.DbConnectionOptions.Port,
@@ -184,23 +184,27 @@ public sealed class PgTempestClient(HttpClient httpClient)
         }
     }
 
-    public async Task ReleaseTestDb(
+    public async Task FinishTestDbUsage(
         TemplateHash templateHash,
         TestDbId testDbId,
         CancellationToken cancellationToken = default
     )
     {
-        var request = new ReleaseTestDbRequestBody(templateHash.ToString(), testDbId.Value);
+        var request = new FinishTestDbUsageRequestBody(
+            templateHash.ToString(),
+            testDbId.ToString()
+        );
 
         var httpResponse = await httpClient.PostAsJsonAsync(
-            "/test-dbs/release",
+            "/api/finish-test-db-usage",
             request,
             cancellationToken
         );
 
-        var responseBody = await httpResponse.Content.ReadFromJsonAsync<ReleaseTestDbResponseBody>(
-            cancellationToken
-        );
+        var responseBody =
+            await httpResponse.Content.ReadFromJsonAsync<FinishTestDbUsageResponseBody>(
+                cancellationToken
+            );
 
         switch (responseBody)
         {
@@ -210,6 +214,8 @@ public sealed class PgTempestClient(HttpClient httpClient)
                 throw new InvalidOperationException("Template was not found");
             case { TestDbWasNotFound: { } }:
                 throw new InvalidOperationException("Test db was not found");
+            case { TestDbIsNotUsed: { } }:
+                throw new InvalidOperationException("Test db is not used");
             default:
                 throw new NullReferenceException();
         }
@@ -255,7 +261,7 @@ public sealed class PgTempestClient(HttpClient httpClient)
                 }
                 catch
                 {
-                    await MarkTemplateInitializationAsFailed(templateHash, CancellationToken.None);
+                    await FailTemplateInitialization(templateHash, CancellationToken.None);
                     throw;
                 }
                 return;

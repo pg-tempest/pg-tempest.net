@@ -16,6 +16,6 @@ public sealed class TestDbUsageGuard(
 
     public async ValueTask DisposeAsync()
     {
-        await client.ReleaseTestDb(templateHash, testDbId);
+        await client.FinishTestDbUsage(templateHash, testDbId);
     }
 }

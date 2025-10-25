@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 
 namespace PgTempest.Sdk.Client.Dtos;
 
-internal sealed record ReleaseTestDbRequestBody(
+internal sealed record FinishTestDbUsageRequestBody(
     [property: JsonPropertyName("templateHash")] string TemplateHash,
-    [property: JsonPropertyName("testDbId")] ushort TestDbId
+    [property: JsonPropertyName("testDbId")] string TestDbId
 );

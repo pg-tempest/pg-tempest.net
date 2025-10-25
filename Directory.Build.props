@@ -7,7 +7,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <Authors>Dmitry Zhavoronkov</Authors>
-    <Version>0.1.0-alpha</Version>
+    <Version>0.2.0</Version>
     <RepositoryUrl>https://github.com/pg-tempest/pg-tempest.net</RepositoryUrl>
     <PackageProjectUrl>https://github.com/pg-tempest/pg-tempest.net</PackageProjectUrl>
     <IncludeSymbols>true</IncludeSymbols>

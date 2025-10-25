@@ -39,19 +39,19 @@ public static class PgTempestContainerFixture
         await PostgreSqlContainer.StartAsync();
 
         PgTempestContainer = new ContainerBuilder()
-            .WithImage("pg-tempest:0.1.0-alpha")
+            .WithImage("pg-tempest:0.2.0")
             .WithPortBinding(8000, true)
             .WithNetwork(Network)
-            .WithEnvironment("PG_TEMPEST_CORE_DBMS_USER", PgUser)
-            .WithEnvironment("PG_TEMPEST_CORE_DBMS_PASSWORD", PgPassword)
-            .WithEnvironment("PG_TEMPEST_CORE_DBMS_INNER_HOST", PostgreSqlContainer.IpAddress)
+            .WithEnvironment("PG_TEMPEST_DBMS_USER", PgUser)
+            .WithEnvironment("PG_TEMPEST_DBMS_PASSWORD", PgPassword)
+            .WithEnvironment("PG_TEMPEST_DBMS_INNER_HOST", PostgreSqlContainer.IpAddress)
             .WithEnvironment(
-                "PG_TEMPEST_CORE_DBMS_INNER_PORT",
+                "PG_TEMPEST_DBMS_INNER_PORT",
                 PostgreSqlBuilder.PostgreSqlPort.ToString()
             )
-            .WithEnvironment("PG_TEMPEST_CORE_DBMS_OUTER_HOST", "localhost")
+            .WithEnvironment("PG_TEMPEST_DBMS_OUTER_HOST", "localhost")
             .WithEnvironment(
-                "PG_TEMPEST_CORE_DBMS_OUTER_PORT",
+                "PG_TEMPEST_DBMS_OUTER_PORT",
                 PostgreSqlContainer.GetMappedPublicPort(PostgreSqlBuilder.PostgreSqlPort).ToString()
             )
             .Build();

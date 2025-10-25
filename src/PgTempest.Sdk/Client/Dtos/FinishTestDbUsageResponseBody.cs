@@ -2,8 +2,9 @@ using System.Text.Json.Serialization;
 
 namespace PgTempest.Sdk.Client.Dtos;
 
-internal sealed record ReleaseTestDbResponseBody(
+internal sealed record FinishTestDbUsageResponseBody(
     [property: JsonPropertyName("testDbWasReleased")] EmptyDto? TestDbWasReleased,
     [property: JsonPropertyName("templateWasNotFound")] EmptyDto? TemplateWasNotFound,
-    [property: JsonPropertyName("testDbWasNotFound")] EmptyDto? TestDbWasNotFound
+    [property: JsonPropertyName("testDbWasNotFound")] EmptyDto? TestDbWasNotFound,
+    [property: JsonPropertyName("testDbIsNotUsed")] EmptyDto? TestDbIsNotUsed
 );
