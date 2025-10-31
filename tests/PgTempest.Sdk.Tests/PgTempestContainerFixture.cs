@@ -19,7 +19,7 @@ public static class PgTempestContainerFixture
     {
         var httpClient = new HttpClient();
         httpClient.BaseAddress = new Uri(
-            $"http://localhost:{PgTempestContainer.GetMappedPublicPort(8000)}"
+            $"http://{PgTempestContainer.Hostname}:{PgTempestContainer.GetMappedPublicPort(8000)}"
         );
 
         return httpClient;
@@ -39,7 +39,7 @@ public static class PgTempestContainerFixture
         await PostgreSqlContainer.StartAsync();
 
         PgTempestContainer = new ContainerBuilder()
-            .WithImage("pg-tempest:0.2.0")
+            .WithImage("rudomitori/pg-tempest:0.2.0")
             .WithPortBinding(8000, true)
             .WithNetwork(Network)
             .WithEnvironment("PG_TEMPEST_DBMS_USER", PgUser)
@@ -49,7 +49,7 @@ public static class PgTempestContainerFixture
                 "PG_TEMPEST_DBMS_INNER_PORT",
                 PostgreSqlBuilder.PostgreSqlPort.ToString()
             )
-            .WithEnvironment("PG_TEMPEST_DBMS_OUTER_HOST", "localhost")
+            .WithEnvironment("PG_TEMPEST_DBMS_OUTER_HOST", PostgreSqlContainer.Hostname)
             .WithEnvironment(
                 "PG_TEMPEST_DBMS_OUTER_PORT",
                 PostgreSqlContainer.GetMappedPublicPort(PostgreSqlBuilder.PostgreSqlPort).ToString()

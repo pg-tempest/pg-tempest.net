@@ -1,0 +1,42 @@
+variables: 
+  DOTNET_SDK_VERSION: 9.0
+
+sdk tests:
+  variables:
+    # Instruct Testcontainers to use the daemon of DinD
+    DOCKER_HOST: "tcp://docker:2375"
+    # Instruct Docker not to start over TLS.
+    DOCKER_TLS_CERTDIR: ""
+    # Improve performance with overlayfs.
+    DOCKER_DRIVER: overlay2
+  services:
+    - name: docker:dind
+  image: mcr.microsoft.com/dotnet/sdk:${DOTNET_SDK_VERSION}
+  script:
+    dotnet test --filter PgTempest.Sdk.Tests
+
+samples tests:
+  variables:
+    # if something is going wrong, you can enable logs from services
+    # CI_DEBUG_SERVICES: true
+    
+    # activate container-to-container networking
+    FF_NETWORK_PER_BUILD: 1
+    PG_TEMPEST_HOST: pg-tempest
+  services:
+    # services are started one-by-one in order as they are defined,
+    # so pg-tempest must be defined after postgres
+    - name: postgres:17
+      variables:
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: postgres
+    - alias: pg-tempest
+      name: rudomitori/pg-tempest:0.2.0
+      variables:
+        PG_TEMPEST_DBMS_INNER_HOST: postgres
+        PG_TEMPEST_DBMS_INNER_PORT: 5432
+        PG_TEMPEST_DBMS_USER: postgres
+        PG_TEMPEST_DBMS_PASSWORD: postgres
+  image: mcr.microsoft.com/dotnet/sdk:${DOTNET_SDK_VERSION}
+  script:
+    - dotnet test --filter Samples.Dupper.Tests
