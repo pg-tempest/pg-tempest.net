@@ -21,6 +21,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common", "common", "{7A042C
 	ProjectSection(SolutionItems) = preProject
 		Directory.Build.props = Directory.Build.props
 		.config\dotnet-tools.json = .config\dotnet-tools.json
+		.gitlab-ci.yml = .gitlab-ci.yml
 	EndProjectSection
 EndProject
 Global

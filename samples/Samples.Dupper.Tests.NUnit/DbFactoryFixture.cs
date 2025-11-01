@@ -8,8 +8,10 @@ namespace Samples.Dupper.Tests.NUnit;
 [SetUpFixture]
 internal sealed class DbFactoryFixture
 {
-    public const string PgTempestHost = "127.0.0.1";
-    public const int PgTempestPort = 8000;
+    public static readonly string PgTempestHost =
+        Environment.GetEnvironmentVariable("PG_TEMPEST_HOST") ?? "localhost";
+    public static readonly string PgTempestPort =
+        Environment.GetEnvironmentVariable("PG_TEMPEST_PORT") ?? "8000";
 
     public static TestDbFactory TestDbFactory { get; private set; }
 
